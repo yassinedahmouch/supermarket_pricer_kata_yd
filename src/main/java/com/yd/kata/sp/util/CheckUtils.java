@@ -1,5 +1,11 @@
 package com.yd.kata.sp.util;
 
+/**
+ * Utility class for checks.
+ * 
+ * @author Yassine
+ *
+ */
 public class CheckUtils {
 
     private CheckUtils() {
@@ -17,6 +23,12 @@ public class CheckUtils {
         if (0 == (firstParameterToCheck + secondParameterTocheck)) {
             throw new IllegalArgumentException("The sum of parameters : " + firstParameterDisplay + " and "
                     + secondParameterDisplay + " can not be 0.");
+        }
+    }
+
+    public static void ensureNotNull(Object parameterToCheck, String parameterDisplay) {
+        if (null == parameterToCheck) {
+            throw new IllegalArgumentException("The parameter " + parameterDisplay + " can not be null.");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.yd.kata.sp.service;
 
+import static com.yd.kata.sp.util.CheckUtils.ensureNotNull;
 import static java.math.BigDecimal.ZERO;
 
 import java.math.BigDecimal;
@@ -30,6 +31,8 @@ public class Pricer {
             BigDecimal itemPrice     = item.getPrice();
             int        itemQuantity  = item.getQuantity();
             Promotion  itemPromotion = item.getPromotion();
+
+            ensureNotNull(itemPrice, "itemPrice");
 
             if (null != itemPromotion) {
                 itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemPrice);

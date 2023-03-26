@@ -1,6 +1,7 @@
 package com.yd.kata.sp.model;
 
 import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
+import static com.yd.kata.sp.util.CheckUtils.ensureNotNull;
 
 import java.math.BigDecimal;
 
@@ -26,10 +27,7 @@ public class BuyXForYPromotion implements Promotion {
     public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
 
         ensureNotEqualToZero(quantityPerPromotion, "quantityPerPromotion");
-
-        if (null == promotionPrice) {
-            throw new IllegalArgumentException("The parameter promotionPrice can not be null.");
-        }
+        ensureNotNull(promotionPrice, "promotionPrice");
 
         int        numPromotions       = itemQuantity / quantityPerPromotion;
         int        remainingItems      = itemQuantity % quantityPerPromotion;
