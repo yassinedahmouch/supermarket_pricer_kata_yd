@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.yd.kata.sp.model.BuyXForYPromotion;
+import com.yd.kata.sp.model.BuyXGetYFreePromotion;
 import com.yd.kata.sp.model.Item;
 
 import junit.framework.TestCase;
@@ -20,7 +21,8 @@ import junit.framework.TestCase;
 public class PricerTest extends TestCase {
 
     List<Item> items;
-    List<Item> itemsWithPromotion;
+    List<Item> itemsWithPromotionBuyXForY;
+    List<Item> itemsWithPromotionBuyXGetYFree;
 
     @Override
     protected void setUp() throws Exception {
@@ -32,11 +34,17 @@ public class PricerTest extends TestCase {
         items.add(waterBottleItem);
         items.add(pastaPackItem);
         
-        itemsWithPromotion = new ArrayList<>();
+        itemsWithPromotionBuyXForY = new ArrayList<>();
 
         Item beanCanItem = new Item("bean can", new BigDecimal(1), 4, new BuyXForYPromotion(3, new BigDecimal(1)));
 
-        itemsWithPromotion.add(beanCanItem);
+        itemsWithPromotionBuyXForY.add(beanCanItem);
+        
+        itemsWithPromotionBuyXGetYFree = new ArrayList<>();
+        
+        Item milkBottleItem = new Item("milk bottle", new BigDecimal(1), 3, new BuyXGetYFreePromotion(2, 1));
+        
+        itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
     }
 
     @Test
@@ -52,7 +60,16 @@ public class PricerTest extends TestCase {
     public void testPricerWithPromotionBuyXForY() {
 
         Pricer     pricer = new Pricer();
-        BigDecimal total  = pricer.computeTotalPrice(itemsWithPromotion);
+        BigDecimal total  = pricer.computeTotalPrice(itemsWithPromotionBuyXForY);
+
+        assertEquals(new BigDecimal(2), total);
+    }
+    
+    @Test
+    public void testPricerWithPromotionBuyXGetYFree() {
+
+        Pricer     pricer = new Pricer();
+        BigDecimal total  = pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
 
         assertEquals(new BigDecimal(2), total);
     }
