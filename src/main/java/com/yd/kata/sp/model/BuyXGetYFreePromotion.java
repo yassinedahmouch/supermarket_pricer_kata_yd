@@ -22,6 +22,13 @@ public class BuyXGetYFreePromotion implements Promotion {
 
     @Override
     public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
-        return null;
+
+        if (itemQuantity <= quantityToGetDiscount) {
+            return itemPrice.multiply(new BigDecimal(itemQuantity));
+        }
+
+        int numQualifying = itemQuantity / (quantityToGetDiscount + quantityForFree);
+
+        return itemPrice.multiply(new BigDecimal(itemQuantity - numQualifying * quantityForFree));
     }
 }
