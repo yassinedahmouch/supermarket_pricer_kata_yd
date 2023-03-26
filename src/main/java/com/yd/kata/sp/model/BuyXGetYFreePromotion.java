@@ -1,5 +1,8 @@
 package com.yd.kata.sp.model;
 
+import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
+import static com.yd.kata.sp.util.CheckUtils.ensureSumNotEqualToZero;
+
 import java.math.BigDecimal;
 
 /**
@@ -22,6 +25,10 @@ public class BuyXGetYFreePromotion implements Promotion {
 
     @Override
     public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
+
+        ensureNotEqualToZero(quantityToGetDiscount, "quantityToGetDiscount");
+        ensureNotEqualToZero(quantityForFree, "quantityForFree");
+        ensureSumNotEqualToZero(quantityToGetDiscount, quantityForFree, "quantityToGetDiscount", "quantityForFree");
 
         if (itemQuantity <= quantityToGetDiscount) {
             return itemPrice.multiply(new BigDecimal(itemQuantity));

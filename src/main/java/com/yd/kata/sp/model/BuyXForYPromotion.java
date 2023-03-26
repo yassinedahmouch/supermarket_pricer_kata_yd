@@ -1,5 +1,7 @@
 package com.yd.kata.sp.model;
 
+import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
+
 import java.math.BigDecimal;
 
 /**
@@ -23,8 +25,10 @@ public class BuyXForYPromotion implements Promotion {
     @Override
     public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
 
-        if (0 == quantityPerPromotion) {
-            throw new IllegalArgumentException("The parameter quantityPerPromotion can not be equal to 0.");
+        ensureNotEqualToZero(quantityPerPromotion, "quantityPerPromotion");
+
+        if (null == promotionPrice) {
+            throw new IllegalArgumentException("The parameter promotionPrice can not be null.");
         }
 
         int        numPromotions       = itemQuantity / quantityPerPromotion;
