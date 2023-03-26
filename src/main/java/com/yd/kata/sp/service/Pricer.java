@@ -7,6 +7,7 @@ import java.math.MathContext;
 import java.util.List;
 
 import com.yd.kata.sp.model.Item;
+import com.yd.kata.sp.model.Promotion;
 
 /**
  * This class is used for pricing a basket of goods.
@@ -26,11 +27,17 @@ public class Pricer {
 
         for (Item item : items) {
             BigDecimal itemTotalPrice;
-            BigDecimal itemPrice    = item.getPrice();
-            int        itemQuantity = item.getQuantity();
+            BigDecimal itemPrice     = item.getPrice();
+            int        itemQuantity  = item.getQuantity();
+            Promotion  itemPromotion = item.getPromotion();
 
-            itemTotalPrice = itemPrice.multiply(new BigDecimal(itemQuantity));
-            totalPrice     = totalPrice.add(itemTotalPrice, new MathContext(4));
+            if (null != itemPromotion) {
+                itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemPrice);
+            } else {
+                itemTotalPrice = itemPrice.multiply(new BigDecimal(itemQuantity));
+            }
+
+            totalPrice = totalPrice.add(itemTotalPrice, new MathContext(4));
         }
 
         return totalPrice;

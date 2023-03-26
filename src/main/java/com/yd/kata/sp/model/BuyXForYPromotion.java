@@ -12,9 +12,7 @@ import java.math.BigDecimal;
  */
 public class BuyXForYPromotion implements Promotion {
 
-    @SuppressWarnings("unused")
     private int        quantityPerPromotion;
-    @SuppressWarnings("unused")
     private BigDecimal promotionPrice;
 
     public BuyXForYPromotion(int quantityPerPromotion, BigDecimal promotionPrice) {
@@ -24,6 +22,17 @@ public class BuyXForYPromotion implements Promotion {
 
     @Override
     public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
-        return null;
+
+        if (0 == quantityPerPromotion) {
+            throw new IllegalArgumentException("The parameter quantityPerPromotion can not be equal to 0.");
+        }
+
+        int        numPromotions       = itemQuantity / quantityPerPromotion;
+        int        remainingItems      = itemQuantity % quantityPerPromotion;
+
+        BigDecimal totalPromotionPrice = promotionPrice.multiply(new BigDecimal(numPromotions));
+        BigDecimal remainingItemsPrice = itemPrice.multiply(new BigDecimal(remainingItems));
+
+        return totalPromotionPrice.add(remainingItemsPrice);
     }
 }
