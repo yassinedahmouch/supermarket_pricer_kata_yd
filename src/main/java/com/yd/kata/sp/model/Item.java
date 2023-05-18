@@ -1,21 +1,19 @@
 package com.yd.kata.sp.model;
 
-import java.math.BigDecimal;
-
 public class Item {
 
-    private String     itemName;
-    private BigDecimal price;
-    private int        quantity;
-    private Promotion  promotion;
+    private String    itemName;
+    private Price     price;
+    private Quantity  quantity;
+    private Promotion promotion;
 
-    public Item(String itemName, BigDecimal price, int quantity) {
+    public Item(String itemName, Price price, Quantity quantity) {
         this.itemName = itemName;
         this.price    = price;
         this.quantity = quantity;
     }
 
-    public Item(String itemName, BigDecimal price, int quantity, Promotion promotion) {
+    public Item(String itemName, Price price, Quantity quantity, Promotion promotion) {
         this.itemName  = itemName;
         this.price     = price;
         this.quantity  = quantity;
@@ -26,11 +24,11 @@ public class Item {
         return itemName;
     }
 
-    public BigDecimal getPrice() {
+    public Price getPrice() {
         return price;
     }
 
-    public int getQuantity() {
+    public Quantity getQuantity() {
         return quantity;
     }
 

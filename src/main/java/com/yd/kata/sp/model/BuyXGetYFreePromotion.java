@@ -15,27 +15,30 @@ import java.math.BigDecimal;
  */
 public class BuyXGetYFreePromotion implements Promotion {
 
-    private int quantityToGetDiscount;
-    private int quantityForFree;
+    private Quantity quantityToGetDiscount;
+    private Quantity quantityForFree;
 
-    public BuyXGetYFreePromotion(int quantityToGetDiscount, int quantityForFree) {
+    public BuyXGetYFreePromotion(Quantity quantityToGetDiscount, Quantity quantityForFree) {
         this.quantityToGetDiscount = quantityToGetDiscount;
         this.quantityForFree       = quantityForFree;
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
+    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, BigDecimal itemPrice) {
 
-        ensureNotEqualToZero(quantityToGetDiscount, "quantityToGetDiscount");
-        ensureNotEqualToZero(quantityForFree, "quantityForFree");
-        ensureSumNotEqualToZero(quantityToGetDiscount, quantityForFree, "quantityToGetDiscount", "quantityForFree");
+        BigDecimal quantityToGetDiscountValue = quantityToGetDiscount.getQuantityValue();
+        BigDecimal quantityForFreeValue       = quantityForFree.getQuantityValue();
 
-        if (itemQuantity <= quantityToGetDiscount) {
-            return itemPrice.multiply(new BigDecimal(itemQuantity));
+        ensureNotEqualToZero(quantityToGetDiscountValue, "quantityToGetDiscount");
+        ensureNotEqualToZero(quantityForFreeValue, "quantityForFree");
+        ensureSumNotEqualToZero(quantityToGetDiscountValue, quantityForFreeValue, "quantityToGetDiscount", "quantityForFree");
+
+        if (itemQuantity.compareTo(quantityToGetDiscountValue) <= 0) {
+            return itemPrice.multiply(itemQuantity);
         }
 
-        int numQualifying = itemQuantity / (quantityToGetDiscount + quantityForFree);
+        BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscountValue.add(quantityForFreeValue)));
 
-        return itemPrice.multiply(new BigDecimal(itemQuantity - numQualifying * quantityForFree));
+        return itemPrice.multiply(itemQuantity.subtract(numQualifying.multiply(quantityForFreeValue)));
     }
 }

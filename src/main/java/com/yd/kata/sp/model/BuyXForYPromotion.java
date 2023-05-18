@@ -4,6 +4,7 @@ import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
 import static com.yd.kata.sp.util.CheckUtils.ensureNotNull;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * This class is an implementation of the interface {@link Promotion}.</br>
@@ -15,25 +16,27 @@ import java.math.BigDecimal;
  */
 public class BuyXForYPromotion implements Promotion {
 
-    private int        quantityPerPromotion;
+    private Quantity   quantityPerPromotion;
     private BigDecimal promotionPrice;
 
-    public BuyXForYPromotion(int quantityPerPromotion, BigDecimal promotionPrice) {
+    public BuyXForYPromotion(Quantity quantityPerPromotion, BigDecimal promotionPrice) {
         this.quantityPerPromotion = quantityPerPromotion;
         this.promotionPrice       = promotionPrice;
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(int itemQuantity, BigDecimal itemPrice) {
+    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, BigDecimal itemPrice) {
 
-        ensureNotEqualToZero(quantityPerPromotion, "quantityPerPromotion");
+        BigDecimal quantityPerPromotionValue = quantityPerPromotion.getQuantityValue();
+
+        ensureNotEqualToZero(quantityPerPromotionValue, "quantityPerPromotion");
         ensureNotNull(promotionPrice, "promotionPrice");
 
-        int        numPromotions       = itemQuantity / quantityPerPromotion;
-        int        remainingItems      = itemQuantity % quantityPerPromotion;
+        BigDecimal numPromotions       = itemQuantity.divide(quantityPerPromotionValue, 0, RoundingMode.HALF_UP);
+        BigDecimal remainingItems      = itemQuantity.remainder(quantityPerPromotionValue);
 
-        BigDecimal totalPromotionPrice = promotionPrice.multiply(new BigDecimal(numPromotions));
-        BigDecimal remainingItemsPrice = itemPrice.multiply(new BigDecimal(remainingItems));
+        BigDecimal totalPromotionPrice = promotionPrice.multiply(numPromotions);
+        BigDecimal remainingItemsPrice = itemPrice.multiply(remainingItems);
 
         return totalPromotionPrice.add(remainingItemsPrice);
     }

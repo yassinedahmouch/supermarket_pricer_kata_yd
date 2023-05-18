@@ -28,8 +28,8 @@ public class Pricer {
 
         for (Item item : items) {
             BigDecimal itemTotalPrice;
-            BigDecimal itemPrice     = item.getPrice();
-            int        itemQuantity  = item.getQuantity();
+            BigDecimal itemPrice     = item.getPrice().getPriceValue();
+            BigDecimal itemQuantity  = item.getQuantity().getQuantityValue();
             Promotion  itemPromotion = item.getPromotion();
 
             ensureNotNull(itemPrice, "itemPrice");
@@ -37,7 +37,7 @@ public class Pricer {
             if (null != itemPromotion) {
                 itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemPrice);
             } else {
-                itemTotalPrice = itemPrice.multiply(new BigDecimal(itemQuantity));
+                itemTotalPrice = itemPrice.multiply(itemQuantity);
             }
 
             totalPrice = totalPrice.add(itemTotalPrice, new MathContext(4));
