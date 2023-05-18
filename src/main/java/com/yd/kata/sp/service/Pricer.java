@@ -39,7 +39,6 @@ public class Pricer {
             UnitType   itemPriceType     = itemPrice.getPriceType();
             //
             Quantity   itemQuantity      = item.getQuantity();
-            BigDecimal itemQuantityValue = itemQuantity.getQuantityValue();
             UnitType   itemQuantityType     = itemQuantity.getQuantityType();
             //
             Promotion  itemPromotion     = item.getPromotion();
@@ -48,7 +47,7 @@ public class Pricer {
             ensureNotNull(itemPriceValue, "itemPrice");
 
             if (null != itemPromotion) {
-                itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantityValue, itemPriceValue);
+                itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemPrice);
             } else {
                 itemQuantity.setQuantityValue(conversion(itemQuantity, itemPriceType));
                 itemTotalPrice = itemPriceValue.multiply(itemQuantity.getQuantityValue());

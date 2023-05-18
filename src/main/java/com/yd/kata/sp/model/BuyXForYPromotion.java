@@ -28,7 +28,7 @@ public class BuyXForYPromotion implements Promotion {
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, BigDecimal itemPrice) {
+    public BigDecimal computePriceWithPromotion(Quantity itemQuantity, Price itemPrice) {
         UnitType quantityPerPromotionType = quantityPerPromotion.getQuantityType();
         ensureType(quantityPerPromotionType, "Quantity per promotion type");
 
@@ -37,11 +37,14 @@ public class BuyXForYPromotion implements Promotion {
         ensureNotEqualToZero(quantityPerPromotionValue, "quantityPerPromotion");
         ensureNotNull(promotionPrice, "promotionPrice");
 
-        BigDecimal numPromotions       = itemQuantity.divide(quantityPerPromotionValue, 0, RoundingMode.HALF_UP);
-        BigDecimal remainingItems      = itemQuantity.remainder(quantityPerPromotionValue);
+        BigDecimal itemQuantityValue   = itemQuantity.getQuantityValue();
+        BigDecimal itemPriceValue      = itemPrice.getPriceValue();
+        //
+        BigDecimal numPromotions       = itemQuantityValue.divide(quantityPerPromotionValue, 0, RoundingMode.HALF_UP);
+        BigDecimal remainingItems      = itemQuantityValue.remainder(quantityPerPromotionValue);
 
         BigDecimal totalPromotionPrice = promotionPrice.multiply(numPromotions);
-        BigDecimal remainingItemsPrice = itemPrice.multiply(remainingItems);
+        BigDecimal remainingItemsPrice = itemPriceValue.multiply(remainingItems);
 
         return totalPromotionPrice.add(remainingItemsPrice);
     }

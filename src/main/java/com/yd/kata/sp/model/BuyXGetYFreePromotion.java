@@ -27,10 +27,10 @@ public class BuyXGetYFreePromotion implements Promotion {
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, BigDecimal itemPrice) {
+    public BigDecimal computePriceWithPromotion(Quantity itemQuantity, Price itemPrice) {
         UnitType quantityToGetDiscountType = quantityToGetDiscount.getQuantityType();
         ensureType(quantityToGetDiscountType, "Quantity to get discount type");
-        
+
         UnitType quantityForFreeType = quantityForFree.getQuantityType();
         ensureType(quantityForFreeType, "Quantity for free type");
 
@@ -39,14 +39,18 @@ public class BuyXGetYFreePromotion implements Promotion {
 
         ensureNotEqualToZero(quantityToGetDiscountValue, "quantityToGetDiscount");
         ensureNotEqualToZero(quantityForFreeValue, "quantityForFree");
-        ensureSumNotEqualToZero(quantityToGetDiscountValue, quantityForFreeValue, "quantityToGetDiscount", "quantityForFree");
+        ensureSumNotEqualToZero(quantityToGetDiscountValue, quantityForFreeValue, "quantityToGetDiscount",
+                "quantityForFree");
 
-        if (itemQuantity.compareTo(quantityToGetDiscountValue) <= 0) {
-            return itemPrice.multiply(itemQuantity);
+        BigDecimal itemQuantityValue = itemQuantity.getQuantityValue();
+        BigDecimal itemPriceValue    = itemPrice.getPriceValue();
+
+        if (itemQuantityValue.compareTo(quantityToGetDiscountValue) <= 0) {
+            return itemPriceValue.multiply(itemQuantityValue);
         }
 
-        BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscountValue.add(quantityForFreeValue)));
+        BigDecimal numQualifying = itemQuantityValue.divide((quantityToGetDiscountValue.add(quantityForFreeValue)));
 
-        return itemPrice.multiply(itemQuantity.subtract(numQualifying.multiply(quantityForFreeValue)));
+        return itemPriceValue.multiply(itemQuantityValue.subtract(numQualifying.multiply(quantityForFreeValue)));
     }
 }
