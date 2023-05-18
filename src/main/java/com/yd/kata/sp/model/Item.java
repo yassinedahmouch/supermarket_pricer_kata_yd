@@ -1,5 +1,11 @@
 package com.yd.kata.sp.model;
 
+/**
+ * This class is a representation of an item from a supermarket.
+ * 
+ * @author Yassine
+ *
+ */
 public class Item {
 
     private String    itemName;

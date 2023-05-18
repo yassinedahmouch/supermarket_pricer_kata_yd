@@ -70,9 +70,8 @@ public class PricerTest extends TestCase {
         itemsWithPromotionBuyXPoundForY = new ArrayList<>();
         
         Item lensItem = new Item("tomato", new Price(UnitType.OUNCE, new BigDecimal(0.1)),
-                new Quantity(UnitType.POUND, new BigDecimal(3/** 48 **/
-                )), new BuyXPoundForYPromotion(new Quantity(UnitType.POUND, new BigDecimal(2/** 32 **/
-                )), new BigDecimal(1)));
+                new Quantity(UnitType.POUND, new BigDecimal(3)),
+                new BuyXPoundForYPromotion(new Quantity(UnitType.POUND, new BigDecimal(2)), new BigDecimal(1)));
         
         itemsWithPromotionBuyXPoundForY.add(lensItem);
 

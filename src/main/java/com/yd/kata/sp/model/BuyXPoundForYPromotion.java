@@ -4,6 +4,14 @@ import java.math.BigDecimal;
 
 import com.yd.kata.sp.util.ConversionUtils;
 
+/**
+ * This class is an implementation of the interface {@link Promotion}.</br>
+ * This promotion specify that if you buy X pound of a goods, you will have to
+ * pay only Y instead of the original price.
+ * 
+ * @author Yassine
+ *
+ */
 public class BuyXPoundForYPromotion implements Promotion {
 
     private Quantity   quantityPerPromotion;

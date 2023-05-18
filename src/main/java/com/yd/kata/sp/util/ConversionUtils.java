@@ -10,6 +10,12 @@ import java.math.BigDecimal;
 import com.yd.kata.sp.model.Quantity;
 import com.yd.kata.sp.model.enumeration.UnitType;
 
+/**
+ * Utility class for weight conversion.
+ * 
+ * @author Yassine
+ *
+ */
 public class ConversionUtils {
 
     private ConversionUtils() {
