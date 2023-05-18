@@ -2,8 +2,11 @@ package com.yd.kata.sp.model;
 
 import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
 import static com.yd.kata.sp.util.CheckUtils.ensureSumNotEqualToZero;
+import static com.yd.kata.sp.util.CheckUtils.ensureType;
 
 import java.math.BigDecimal;
+
+import com.yd.kata.sp.model.enumeration.UnitType;
 
 /**
  * This class is an implementation of the interface {@link Promotion}.</br>
@@ -25,6 +28,11 @@ public class BuyXGetYFreePromotion implements Promotion {
 
     @Override
     public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, BigDecimal itemPrice) {
+        UnitType quantityToGetDiscountType = quantityToGetDiscount.getQuantityType();
+        ensureType(quantityToGetDiscountType, "Quantity to get discount type");
+        
+        UnitType quantityForFreeType = quantityForFree.getQuantityType();
+        ensureType(quantityForFreeType, "Quantity for free type");
 
         BigDecimal quantityToGetDiscountValue = quantityToGetDiscount.getQuantityValue();
         BigDecimal quantityForFreeValue       = quantityForFree.getQuantityValue();

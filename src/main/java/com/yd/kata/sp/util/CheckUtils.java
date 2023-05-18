@@ -2,6 +2,8 @@ package com.yd.kata.sp.util;
 
 import java.math.BigDecimal;
 
+import com.yd.kata.sp.model.enumeration.UnitType;
+
 /**
  * Utility class for checks.
  * 
@@ -31,6 +33,22 @@ public class CheckUtils {
     public static void ensureNotNull(Object parameterToCheck, String parameterDisplay) {
         if (null == parameterToCheck) {
             throw new IllegalArgumentException("The parameter " + parameterDisplay + " can not be null.");
+        }
+    }
+    
+    public static void ensureCompatibility(UnitType firstUnitToCheck, UnitType secondUnitTocheck,
+            String firstUnitDisplay, String secondUnitDisplay) {
+        if ((firstUnitToCheck == UnitType.NUMBER && secondUnitTocheck != UnitType.NUMBER)
+                || (secondUnitTocheck == UnitType.NUMBER && firstUnitToCheck != UnitType.NUMBER)) {
+            throw new IllegalArgumentException("The " + firstUnitDisplay + " : " + firstUnitToCheck + " and the "
+                    + secondUnitDisplay + " : " + secondUnitTocheck + " are incompatible.");
+        }
+    }
+
+    public static void ensureType(UnitType firstUnitToCheck, String firstUnitDisplay) {
+        if (firstUnitToCheck != UnitType.NUMBER) {
+            throw new IllegalArgumentException(
+                    "The parameter " + firstUnitDisplay + " : " + firstUnitToCheck + " should be countable.");
         }
     }
 }

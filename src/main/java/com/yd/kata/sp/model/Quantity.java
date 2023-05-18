@@ -22,4 +22,8 @@ public class Quantity {
         return quantityValue;
     }
 
+    public void setQuantityValue(BigDecimal quantityValue) {
+        this.quantityValue = quantityValue;
+    }
+
 }

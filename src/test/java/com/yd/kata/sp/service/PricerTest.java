@@ -1,6 +1,7 @@
 package com.yd.kata.sp.service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +99,6 @@ public class PricerTest extends TestCase {
         Pricer     pricer = new Pricer();
         BigDecimal total  = pricer.computeTotalPrice(weightedItem);
 
-        assertEquals(new BigDecimal(0.4975), total);
+        assertEquals(new BigDecimal(0.4975, new MathContext(4)), total);
     }
 }
