@@ -120,6 +120,6 @@ public class PricerTest extends TestCase {
         Pricer     pricer = new Pricer();
         BigDecimal total  = pricer.computeTotalPrice(itemsWithPromotionBuyXPoundForY);
 
-        assertEquals(new BigDecimal(2.60), total);
+        assertEquals(new BigDecimal(2.60, new MathContext(4)), total);
     }
 }

@@ -3,6 +3,7 @@ package com.yd.kata.sp.model;
 import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
 import static com.yd.kata.sp.util.CheckUtils.ensureSumNotEqualToZero;
 import static com.yd.kata.sp.util.CheckUtils.ensureType;
+import static com.yd.kata.sp.util.ConversionUtils.conversion;
 
 import java.math.BigDecimal;
 
@@ -28,6 +29,8 @@ public class BuyXGetYFreePromotion implements Promotion {
 
     @Override
     public BigDecimal computePriceWithPromotion(Quantity itemQuantity, Price itemPrice) {
+        itemQuantity.setQuantityValue(conversion(itemQuantity, itemPrice.getPriceType()));
+        //
         UnitType quantityToGetDiscountType = quantityToGetDiscount.getQuantityType();
         ensureType(quantityToGetDiscountType, "Quantity to get discount type");
 
