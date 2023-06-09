@@ -20,31 +20,29 @@ import com.yd.kata.sp.model.enumeration.UnitType;
  */
 public class BuyXForYPromotion implements Promotion {
 
-    private Quantity   quantityPerPromotion;
+    private BigDecimal quantityPerPromotion;
+    private UnitType   measureUnitPerPromotion;
     private BigDecimal promotionPrice;
 
-    public BuyXForYPromotion(Quantity quantityPerPromotion, BigDecimal promotionPrice) {
-        this.quantityPerPromotion = quantityPerPromotion;
-        this.promotionPrice       = promotionPrice;
+    public BuyXForYPromotion(BigDecimal quantityPerPromotion, UnitType measureUnitPerPromotion,
+            BigDecimal promotionPrice) {
+        this.quantityPerPromotion    = quantityPerPromotion;
+        this.measureUnitPerPromotion = measureUnitPerPromotion;
+        this.promotionPrice          = promotionPrice;
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(Quantity itemQuantity, Price itemPrice) {
-        itemQuantity.setQuantityValue(conversion(itemQuantity, itemPrice.getPriceType()));
+    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, UnitType itemMeasureUnit, Price itemPrice) {
+        itemQuantity = conversion(itemQuantity, itemMeasureUnit, itemPrice.getPriceType());
         //
-        UnitType quantityPerPromotionType = quantityPerPromotion.getQuantityType();
-        ensureType(quantityPerPromotionType, "Quantity per promotion type");
-
-        BigDecimal quantityPerPromotionValue = quantityPerPromotion.getQuantityValue();
-
-        ensureNotEqualToZero(quantityPerPromotionValue, "quantityPerPromotion");
+        ensureType(measureUnitPerPromotion, "Quantity per promotion type");
+        ensureNotEqualToZero(quantityPerPromotion, "quantityPerPromotion");
         ensureNotNull(promotionPrice, "promotionPrice");
 
-        BigDecimal itemQuantityValue   = itemQuantity.getQuantityValue();
         BigDecimal itemPriceValue      = itemPrice.getPriceValue();
         //
-        BigDecimal numPromotions       = itemQuantityValue.divide(quantityPerPromotionValue, 0, RoundingMode.HALF_UP);
-        BigDecimal remainingItems      = itemQuantityValue.remainder(quantityPerPromotionValue);
+        BigDecimal numPromotions       = itemQuantity.divide(quantityPerPromotion, 0, RoundingMode.HALF_UP);
+        BigDecimal remainingItems      = itemQuantity.remainder(quantityPerPromotion);
 
         BigDecimal totalPromotionPrice = promotionPrice.multiply(numPromotions);
         BigDecimal remainingItemsPrice = itemPriceValue.multiply(remainingItems);

@@ -7,13 +7,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.yd.kata.sp.model.Price;
-import com.yd.kata.sp.model.Quantity;
-import com.yd.kata.sp.model.enumeration.UnitType;
-import com.yd.kata.sp.model.BuyXPoundForYPromotion;
 import com.yd.kata.sp.model.BuyXForYPromotion;
 import com.yd.kata.sp.model.BuyXGetYFreePromotion;
+import com.yd.kata.sp.model.BuyXPoundForYPromotion;
 import com.yd.kata.sp.model.Item;
+import com.yd.kata.sp.model.Price;
+import com.yd.kata.sp.model.enumeration.UnitType;
 
 import junit.framework.TestCase;
 
@@ -36,43 +35,40 @@ public class PricerTest extends TestCase {
         items = new ArrayList<>();
 
         Item waterBottleItem = new Item("water bottle", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new Quantity(UnitType.NUMBER, new BigDecimal(2)));
-        Item pastaPackItem   = new Item("pasta pack", new Price(UnitType.NUMBER, new BigDecimal(2)),
-                new Quantity(UnitType.NUMBER, new BigDecimal(1)));
+                new BigDecimal(2), UnitType.NUMBER);
+        Item pastaPackItem   = new Item("pasta pack", new Price(UnitType.NUMBER, new BigDecimal(2)), new BigDecimal(1),
+                UnitType.NUMBER);
 
         items.add(waterBottleItem);
         items.add(pastaPackItem);
 
         itemsWithPromotionBuyXForY = new ArrayList<>();
 
-        Item beanCanItem = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new Quantity(UnitType.NUMBER, new BigDecimal(4)),
-                new BuyXForYPromotion(new Quantity(UnitType.NUMBER, new BigDecimal(3)), new BigDecimal(1)));
+        Item beanCanItem = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(4),
+                UnitType.NUMBER, new BuyXForYPromotion(new BigDecimal(3), UnitType.NUMBER, new BigDecimal(1)));
 
         itemsWithPromotionBuyXForY.add(beanCanItem);
 
         itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
-        Item milkBottleItem = new Item("milk bottle", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new Quantity(UnitType.NUMBER, new BigDecimal(3)),
-                new BuyXGetYFreePromotion(new Quantity(UnitType.NUMBER, new BigDecimal(2)),
-                        new Quantity(UnitType.NUMBER, new BigDecimal(1))));
+        Item milkBottleItem = new Item("milk bottle", new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3),
+                UnitType.NUMBER,
+                new BuyXGetYFreePromotion(new BigDecimal(2), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
         weightedItem = new ArrayList<>();
 
-        Item orangeItem = new Item("orange", new Price(UnitType.POUND, new BigDecimal(1.99)),
-                new Quantity(UnitType.OUNCE, new BigDecimal(4)));
+        Item orangeItem = new Item("orange", new Price(UnitType.POUND, new BigDecimal(1.99)), new BigDecimal(4),
+                UnitType.OUNCE);
 
         weightedItem.add(orangeItem);
-        
+
         itemsWithPromotionBuyXPoundForY = new ArrayList<>();
-        
-        Item lensItem = new Item("tomato", new Price(UnitType.OUNCE, new BigDecimal(0.1)),
-                new Quantity(UnitType.POUND, new BigDecimal(3)),
-                new BuyXPoundForYPromotion(new Quantity(UnitType.POUND, new BigDecimal(2)), new BigDecimal(1)));
-        
+
+        Item lensItem = new Item("tomato", new Price(UnitType.OUNCE, new BigDecimal(0.1)), new BigDecimal(3),
+                UnitType.POUND, new BuyXPoundForYPromotion(new BigDecimal(2), UnitType.POUND, new BigDecimal(1)));
+
         itemsWithPromotionBuyXPoundForY.add(lensItem);
 
     }
@@ -112,7 +108,7 @@ public class PricerTest extends TestCase {
 
         assertEquals(new BigDecimal(0.4975, new MathContext(4)), total);
     }
-    
+
     @Test
     public void testPricerWithPromotionBuyXPoundForY() {
 

@@ -19,41 +19,38 @@ import com.yd.kata.sp.model.enumeration.UnitType;
  */
 public class BuyXGetYFreePromotion implements Promotion {
 
-    private Quantity quantityToGetDiscount;
-    private Quantity quantityForFree;
+    private BigDecimal quantityToGetDiscount;   // Number of items to buy to get the discount
+    private UnitType   measureUnitToGetDiscount;
+    private BigDecimal quantityForFree;         // Number of items to get for free
+    private UnitType   measureUnitForFree;
 
-    public BuyXGetYFreePromotion(Quantity quantityToGetDiscount, Quantity quantityForFree) {
-        this.quantityToGetDiscount = quantityToGetDiscount;
-        this.quantityForFree       = quantityForFree;
+    public BuyXGetYFreePromotion(BigDecimal quantityToGetDiscount, UnitType measureUnitToGetDiscount,
+            BigDecimal quantityForFree, UnitType measureUnitForFree) {
+        this.quantityToGetDiscount    = quantityToGetDiscount;
+        this.measureUnitToGetDiscount = measureUnitToGetDiscount;
+        this.quantityForFree          = quantityForFree;
+        this.measureUnitForFree       = measureUnitForFree;
     }
 
     @Override
-    public BigDecimal computePriceWithPromotion(Quantity itemQuantity, Price itemPrice) {
-        itemQuantity.setQuantityValue(conversion(itemQuantity, itemPrice.getPriceType()));
+    public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, UnitType itemMeasureUnit, Price itemPrice) {
+        itemQuantity = conversion(itemQuantity, itemMeasureUnit, itemPrice.getPriceType());
         //
-        UnitType quantityToGetDiscountType = quantityToGetDiscount.getQuantityType();
-        ensureType(quantityToGetDiscountType, "Quantity to get discount type");
+        ensureType(measureUnitToGetDiscount, "Quantity to get discount type");
+        ensureType(measureUnitForFree, "Quantity for free type");
 
-        UnitType quantityForFreeType = quantityForFree.getQuantityType();
-        ensureType(quantityForFreeType, "Quantity for free type");
+        ensureNotEqualToZero(quantityToGetDiscount, "quantityToGetDiscount");
+        ensureNotEqualToZero(quantityForFree, "quantityForFree");
+        ensureSumNotEqualToZero(quantityToGetDiscount, quantityForFree, "quantityToGetDiscount", "quantityForFree");
 
-        BigDecimal quantityToGetDiscountValue = quantityToGetDiscount.getQuantityValue();
-        BigDecimal quantityForFreeValue       = quantityForFree.getQuantityValue();
+        BigDecimal itemPriceValue = itemPrice.getPriceValue();
 
-        ensureNotEqualToZero(quantityToGetDiscountValue, "quantityToGetDiscount");
-        ensureNotEqualToZero(quantityForFreeValue, "quantityForFree");
-        ensureSumNotEqualToZero(quantityToGetDiscountValue, quantityForFreeValue, "quantityToGetDiscount",
-                "quantityForFree");
-
-        BigDecimal itemQuantityValue = itemQuantity.getQuantityValue();
-        BigDecimal itemPriceValue    = itemPrice.getPriceValue();
-
-        if (itemQuantityValue.compareTo(quantityToGetDiscountValue) <= 0) {
-            return itemPriceValue.multiply(itemQuantityValue);
+        if (itemQuantity.compareTo(quantityToGetDiscount) <= 0) {
+            return itemPriceValue.multiply(itemQuantity);
         }
 
-        BigDecimal numQualifying = itemQuantityValue.divide((quantityToGetDiscountValue.add(quantityForFreeValue)));
+        BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscount.add(quantityForFree)));
 
-        return itemPriceValue.multiply(itemQuantityValue.subtract(numQualifying.multiply(quantityForFreeValue)));
+        return itemPriceValue.multiply(itemQuantity.subtract(numQualifying.multiply(quantityForFree)));
     }
 }

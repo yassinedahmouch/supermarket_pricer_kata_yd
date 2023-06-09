@@ -1,5 +1,9 @@
 package com.yd.kata.sp.model;
 
+import java.math.BigDecimal;
+
+import com.yd.kata.sp.model.enumeration.UnitType;
+
 /**
  * This class is a representation of an item from a supermarket.
  * 
@@ -8,22 +12,25 @@ package com.yd.kata.sp.model;
  */
 public class Item {
 
-    private String    itemName;
-    private Price     price;
-    private Quantity  quantity;
-    private Promotion promotion;
+    private String     itemName;
+    private Price      price;
+    private BigDecimal quantity;
+    private UnitType   measureUnit;
+    private Promotion  promotion;
 
-    public Item(String itemName, Price price, Quantity quantity) {
-        this.itemName = itemName;
-        this.price    = price;
-        this.quantity = quantity;
+    public Item(String itemName, Price price, BigDecimal quantity, UnitType measureUnit) {
+        this.itemName    = itemName;
+        this.price       = price;
+        this.quantity    = quantity;
+        this.measureUnit = measureUnit;
     }
 
-    public Item(String itemName, Price price, Quantity quantity, Promotion promotion) {
-        this.itemName  = itemName;
-        this.price     = price;
-        this.quantity  = quantity;
-        this.promotion = promotion;
+    public Item(String itemName, Price price, BigDecimal quantity, UnitType measureUnit, Promotion promotion) {
+        this.itemName    = itemName;
+        this.price       = price;
+        this.quantity    = quantity;
+        this.measureUnit = measureUnit;
+        this.promotion   = promotion;
     }
 
     public String getItemName() {
@@ -34,8 +41,12 @@ public class Item {
         return price;
     }
 
-    public Quantity getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
+    }
+
+    public UnitType getMeasureUnit() {
+        return measureUnit;
     }
 
     public Promotion getPromotion() {
