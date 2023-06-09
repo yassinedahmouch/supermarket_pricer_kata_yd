@@ -1,15 +1,15 @@
-package com.yd.kata.sp.service;
+package com.yd.supermarket.kata.services;
 
-import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
-import static com.yd.kata.sp.util.CheckUtils.ensureSumNotEqualToZero;
-import static com.yd.kata.sp.util.CheckUtils.ensureType;
-import static com.yd.kata.sp.util.ConversionUtils.conversion;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureNotEqualToZero;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureSumNotEqualToZero;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureType;
+import static com.yd.supermarket.kata.utils.ConversionUtils.conversion;
 
 import java.math.BigDecimal;
 
-import com.yd.kata.sp.model.Price;
-import com.yd.kata.sp.model.Promotion;
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
+import com.yd.supermarket.kata.models.Price;
+import com.yd.supermarket.kata.models.Promotion;
 
 /**
  * This class is an implementation of the interface {@link Promotion}.</br>

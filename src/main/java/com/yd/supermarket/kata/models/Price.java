@@ -1,8 +1,8 @@
-package com.yd.kata.sp.model;
+package com.yd.supermarket.kata.models;
 
 import java.math.BigDecimal;
 
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
 
 public class Price {
     private UnitType   priceType;

@@ -1,11 +1,11 @@
-package com.yd.kata.sp.service;
+package com.yd.supermarket.kata.services;
 
 import java.math.BigDecimal;
 
-import com.yd.kata.sp.model.Price;
-import com.yd.kata.sp.model.Promotion;
-import com.yd.kata.sp.model.enumeration.UnitType;
-import com.yd.kata.sp.util.ConversionUtils;
+import com.yd.supermarket.kata.enumerations.UnitType;
+import com.yd.supermarket.kata.models.Price;
+import com.yd.supermarket.kata.models.Promotion;
+import com.yd.supermarket.kata.utils.ConversionUtils;
 
 /**
  * This class is an implementation of the interface {@link Promotion}.</br>

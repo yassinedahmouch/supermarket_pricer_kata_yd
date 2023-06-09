@@ -1,18 +1,18 @@
-package com.yd.kata.sp.service;
+package com.yd.supermarket.kata.services;
 
-import static com.yd.kata.sp.util.CheckUtils.ensureCompatibility;
-import static com.yd.kata.sp.util.CheckUtils.ensureNotNull;
-import static com.yd.kata.sp.util.ConversionUtils.conversion;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureCompatibility;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureNotNull;
+import static com.yd.supermarket.kata.utils.ConversionUtils.conversion;
 import static java.math.BigDecimal.ZERO;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
-import com.yd.kata.sp.model.Item;
-import com.yd.kata.sp.model.Price;
-import com.yd.kata.sp.model.Promotion;
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
+import com.yd.supermarket.kata.models.Item;
+import com.yd.supermarket.kata.models.Price;
+import com.yd.supermarket.kata.models.Promotion;
 
 /**
  * This class is used for pricing a basket of goods.

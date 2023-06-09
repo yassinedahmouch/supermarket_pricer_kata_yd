@@ -1,4 +1,4 @@
-package com.yd.kata.sp.service;
+package com.yd.supermarket.kata.services;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -7,9 +7,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.yd.kata.sp.model.Item;
-import com.yd.kata.sp.model.Price;
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
+import com.yd.supermarket.kata.models.Item;
+import com.yd.supermarket.kata.models.Price;
+import com.yd.supermarket.kata.services.BuyXForYPromotion;
+import com.yd.supermarket.kata.services.BuyXGetYFreePromotion;
+import com.yd.supermarket.kata.services.BuyXPoundForYPromotion;
+import com.yd.supermarket.kata.services.Pricer;
 
 import junit.framework.TestCase;
 

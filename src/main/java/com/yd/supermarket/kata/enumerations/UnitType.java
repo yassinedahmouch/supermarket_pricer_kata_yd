@@ -1,4 +1,4 @@
-package com.yd.kata.sp.model.enumeration;
+package com.yd.supermarket.kata.enumerations;
 
 public enum UnitType {
 

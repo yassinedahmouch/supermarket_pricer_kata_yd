@@ -1,13 +1,13 @@
-package com.yd.kata.sp.util;
+package com.yd.supermarket.kata.utils;
 
-import static com.yd.kata.sp.model.enumeration.UnitType.GRAM;
-import static com.yd.kata.sp.model.enumeration.UnitType.NUMBER;
-import static com.yd.kata.sp.model.enumeration.UnitType.OUNCE;
-import static com.yd.kata.sp.model.enumeration.UnitType.POUND;
+import static com.yd.supermarket.kata.enumerations.UnitType.GRAM;
+import static com.yd.supermarket.kata.enumerations.UnitType.NUMBER;
+import static com.yd.supermarket.kata.enumerations.UnitType.OUNCE;
+import static com.yd.supermarket.kata.enumerations.UnitType.POUND;
 
 import java.math.BigDecimal;
 
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
 
 /**
  * Utility class for weight conversion.

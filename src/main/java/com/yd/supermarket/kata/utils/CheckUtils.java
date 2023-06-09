@@ -1,8 +1,8 @@
-package com.yd.kata.sp.util;
+package com.yd.supermarket.kata.utils;
 
 import java.math.BigDecimal;
 
-import com.yd.kata.sp.model.enumeration.UnitType;
+import com.yd.supermarket.kata.enumerations.UnitType;
 
 /**
  * Utility class for checks.
