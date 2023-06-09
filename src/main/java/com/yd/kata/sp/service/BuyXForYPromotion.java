@@ -1,4 +1,4 @@
-package com.yd.kata.sp.model;
+package com.yd.kata.sp.service;
 
 import static com.yd.kata.sp.util.CheckUtils.ensureNotEqualToZero;
 import static com.yd.kata.sp.util.CheckUtils.ensureNotNull;
@@ -8,6 +8,8 @@ import static com.yd.kata.sp.util.ConversionUtils.conversion;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.yd.kata.sp.model.Price;
+import com.yd.kata.sp.model.Promotion;
 import com.yd.kata.sp.model.enumeration.UnitType;
 
 /**

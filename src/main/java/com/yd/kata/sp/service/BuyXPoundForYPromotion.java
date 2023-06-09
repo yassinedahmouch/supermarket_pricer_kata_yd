@@ -1,7 +1,9 @@
-package com.yd.kata.sp.model;
+package com.yd.kata.sp.service;
 
 import java.math.BigDecimal;
 
+import com.yd.kata.sp.model.Price;
+import com.yd.kata.sp.model.Promotion;
 import com.yd.kata.sp.model.enumeration.UnitType;
 import com.yd.kata.sp.util.ConversionUtils;
 

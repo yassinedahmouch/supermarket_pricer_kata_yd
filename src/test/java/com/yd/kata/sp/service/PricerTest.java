@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.yd.kata.sp.model.BuyXForYPromotion;
-import com.yd.kata.sp.model.BuyXGetYFreePromotion;
-import com.yd.kata.sp.model.BuyXPoundForYPromotion;
 import com.yd.kata.sp.model.Item;
 import com.yd.kata.sp.model.Price;
 import com.yd.kata.sp.model.enumeration.UnitType;
