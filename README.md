@@ -1,6 +1,6 @@
 # Supermarket pricer
 
-In this kata, we want you to implement a supermarket pricer that can handle :
+In this kata, we want to implement a supermarket pricer that can handle :
 
 - Promotions such as Buy-x-for-y-dollar, Buy-x-get-y-free.
 - Weighted items with units (Gram, Ounce, Pound...).
