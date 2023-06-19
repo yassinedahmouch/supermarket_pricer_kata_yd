@@ -10,10 +10,6 @@ import org.junit.Test;
 import com.yd.supermarket.kata.enumerations.UnitType;
 import com.yd.supermarket.kata.models.Item;
 import com.yd.supermarket.kata.models.Price;
-import com.yd.supermarket.kata.services.BuyXForYPromotion;
-import com.yd.supermarket.kata.services.BuyXGetYFreePromotion;
-import com.yd.supermarket.kata.services.BuyXPoundForYPromotion;
-import com.yd.supermarket.kata.services.Pricer;
 
 import junit.framework.TestCase;
 

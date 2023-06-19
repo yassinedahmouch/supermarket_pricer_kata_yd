@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 
 import com.yd.supermarket.kata.enumerations.UnitType;
 
+/**
+ * This class is a representation of the price of an item.
+ * 
+ * @author Yassine
+ *
+ */
 public class Price {
     private UnitType   priceType;
     private BigDecimal priceValue;

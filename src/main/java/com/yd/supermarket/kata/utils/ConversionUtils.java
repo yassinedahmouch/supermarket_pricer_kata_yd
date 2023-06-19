@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import com.yd.supermarket.kata.enumerations.UnitType;
 
 /**
- * Utility class for weight conversion.
+ * Utility class for weight conversion between units used in this application.
  * 
  * @author Yassine
  *

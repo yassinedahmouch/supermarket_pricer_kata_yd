@@ -22,6 +22,13 @@ import com.yd.supermarket.kata.models.Promotion;
  */
 public class Pricer {
 
+    /**
+     * This method calculate the total price of the list of item with taking
+     * promotions into account.
+     * 
+     * @param items
+     * @return {@link BigDecimal}
+     */
     public BigDecimal computeTotalPrice(List<Item> items) {
 
         BigDecimal totalPrice = ZERO;
