@@ -87,4 +87,17 @@ public class CheckUtils {
                     "The parameter " + firstUnitDisplay + " : " + firstUnitToCheck + " should be countable.");
         }
     }
+    
+    /**
+     * This method is to check that the parameterToCheck is negative.
+     * 
+     * @param parameterToCheck
+     * @param parameterDisplay
+     */
+    public static void ensureNotNegative(BigDecimal parameterToCheck, String parameterDisplay) {
+        if (parameterToCheck.signum() == -1) {
+            throw new IllegalArgumentException(
+                    "The parameter " + parameterToCheck + " : " + parameterDisplay + " should be countable.");
+        }
+    }
 }

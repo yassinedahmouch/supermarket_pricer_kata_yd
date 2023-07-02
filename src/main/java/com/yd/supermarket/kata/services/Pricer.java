@@ -1,6 +1,7 @@
 package com.yd.supermarket.kata.services;
 
 import static com.yd.supermarket.kata.utils.CheckUtils.ensureCompatibility;
+import static com.yd.supermarket.kata.utils.CheckUtils.ensureNotNegative;
 import static com.yd.supermarket.kata.utils.CheckUtils.ensureNotNull;
 import static com.yd.supermarket.kata.utils.ConversionUtils.conversion;
 import static java.math.BigDecimal.ZERO;
@@ -50,7 +51,9 @@ public class Pricer {
             Promotion  itemPromotion   = item.getPromotion();
 
             ensureCompatibility(itemPriceType, itemMeasureUnit, "Item price type", "Item quantity type");
-            ensureNotNull(itemPriceValue, "itemPrice");
+            ensureNotNull(itemPriceValue, "Item price");
+            ensureNotNegative(itemPriceValue, "Item price");
+            ensureNotNegative(itemQuantity, "Item quantity");
 
             if (null != itemPromotion) {
                 itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemMeasureUnit, itemPrice);
