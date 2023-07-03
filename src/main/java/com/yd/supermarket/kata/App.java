@@ -1,7 +1,7 @@
 package com.yd.supermarket.kata;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * This class represent the application entry point.
@@ -9,11 +9,11 @@ import java.util.logging.Logger;
  * @author Yassine
  *
  */
+@SpringBootApplication
 public class App {
 
-    private static final Logger LOG = Logger.getLogger(App.class.getCanonicalName());
 
     public static void main(String[] args) {
-        LOG.log(Level.INFO, "Hello world");
+        SpringApplication.run(App.class, args);
     }
 }

@@ -8,6 +8,8 @@ import static com.yd.supermarket.kata.utils.ConversionUtils.conversion;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.springframework.stereotype.Component;
+
 import com.yd.supermarket.kata.enumerations.UnitType;
 import com.yd.supermarket.kata.models.Price;
 import com.yd.supermarket.kata.models.Promotion;
@@ -18,6 +20,7 @@ import com.yd.supermarket.kata.models.Promotion;
  * @author Yassine
  *
  */
+@Component
 public class BuyXForYPromotion implements Promotion {
 
     // The minimum quantity needed to apply the promotion.
@@ -27,6 +30,7 @@ public class BuyXForYPromotion implements Promotion {
     // The price applied for the promotion
     private BigDecimal promotionPrice;
 
+    public BuyXForYPromotion() {}
     public BuyXForYPromotion(BigDecimal quantityPerPromotion, UnitType measureUnitPerPromotion,
             BigDecimal promotionPrice) {
         this.quantityPerPromotion    = quantityPerPromotion;
@@ -52,7 +56,7 @@ public class BuyXForYPromotion implements Promotion {
         BigDecimal itemPriceValue      = itemPrice.getPriceValue();
         
         // We retrieve the quantity on which will be applied the promotion and the remaining quantity.
-        BigDecimal numPromotions       = itemQuantity.divide(quantityPerPromotion, 0, RoundingMode.HALF_UP);
+        BigDecimal numPromotions       = itemQuantity.divide(quantityPerPromotion, 0, RoundingMode.DOWN);
         BigDecimal remainingItems      = itemQuantity.remainder(quantityPerPromotion);
 
         // We calculate the price of the quantity on which will be applied the promotion and the price of the remaining one.

@@ -6,6 +6,9 @@ import static com.yd.supermarket.kata.utils.CheckUtils.ensureType;
 import static com.yd.supermarket.kata.utils.ConversionUtils.conversion;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.springframework.stereotype.Component;
 
 import com.yd.supermarket.kata.enumerations.UnitType;
 import com.yd.supermarket.kata.models.Price;
@@ -17,6 +20,7 @@ import com.yd.supermarket.kata.models.Promotion;
  * @author Yassine
  *
  */
+@Component
 public class BuyXGetYFreePromotion implements Promotion {
 
     // Number of items to buy to get the discount
@@ -25,6 +29,8 @@ public class BuyXGetYFreePromotion implements Promotion {
     // Number of items to get for free
     private BigDecimal quantityForFree;
     private UnitType   measureUnitForFree;
+    
+    public BuyXGetYFreePromotion() {}
 
     public BuyXGetYFreePromotion(BigDecimal quantityToGetDiscount, UnitType measureUnitToGetDiscount,
             BigDecimal quantityForFree, UnitType measureUnitForFree) {
@@ -58,7 +64,7 @@ public class BuyXGetYFreePromotion implements Promotion {
         }
 
         // Calculate the number of qualifying items.
-        BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscount.add(quantityForFree)));
+        BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscount.add(quantityForFree)), 0, RoundingMode.DOWN);
 
         return itemPriceValue.multiply(itemQuantity.subtract(numQualifying.multiply(quantityForFree)));
     }

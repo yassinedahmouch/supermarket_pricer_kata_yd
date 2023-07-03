@@ -14,6 +14,10 @@ public class Price {
     private UnitType   priceType;
     private BigDecimal priceValue;
 
+    public Price() {
+        super();
+    }
+
     public Price(UnitType priceType, BigDecimal priceValue) {
         super();
         this.priceType  = priceType;

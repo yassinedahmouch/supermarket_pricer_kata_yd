@@ -5,7 +5,12 @@ import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.yd.supermarket.kata.enumerations.UnitType;
 import com.yd.supermarket.kata.models.Item;
@@ -19,16 +24,15 @@ import junit.framework.TestCase;
  * @author Yassine
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class PricerTest extends TestCase {
 
-    Pricer pricer;
+    @InjectMocks
+    PricerService pricerService;
 
-    /**
-     * This method is used for initialization and it is called before a test is executed
-     */
-    @Override
-    protected void setUp() throws Exception {
-        pricer = new Pricer();
+    @Before
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -43,7 +47,7 @@ public class PricerTest extends TestCase {
         items.add(waterBottleItem);
         items.add(pastaPackItem);
 
-        BigDecimal total = pricer.computeTotalPrice(items);
+        BigDecimal total = pricerService.defaultPricer(items);
 
         assertEquals(new BigDecimal(4), total);
     }
@@ -53,12 +57,14 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXForY = new ArrayList<>();
 
         Item       beanCanItem                = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new BigDecimal(4), UnitType.NUMBER,
-                new BuyXForYPromotion(new BigDecimal(3), UnitType.NUMBER, new BigDecimal(1)));
+                new BigDecimal(4), UnitType.NUMBER);
 
         itemsWithPromotionBuyXForY.add(beanCanItem);
 
-        BigDecimal total = pricer.computeTotalPrice(itemsWithPromotionBuyXForY);
+        pricerService
+                .setBuyXForYPromotion(new BuyXForYPromotion(new BigDecimal(3), UnitType.NUMBER, new BigDecimal(1)));
+
+        BigDecimal total = pricerService.buyXForYPromotionPricer(itemsWithPromotionBuyXForY);
 
         assertEquals(new BigDecimal(2), total);
     }
@@ -68,12 +74,14 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
         Item       milkBottleItem                 = new Item("milk bottle",
-                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER,
-                new BuyXGetYFreePromotion(new BigDecimal(2), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER);
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
-        BigDecimal total = pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
+        pricerService.setBuyXGetYFreePromotion(
+                new BuyXGetYFreePromotion(new BigDecimal(2), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+
+        BigDecimal total = pricerService.buyXGetYFreePromotionPricer(itemsWithPromotionBuyXGetYFree);
 
         assertEquals(new BigDecimal(2), total);
     }
@@ -87,7 +95,7 @@ public class PricerTest extends TestCase {
 
         weightedItem.add(orangeItem);
 
-        BigDecimal total = pricer.computeTotalPrice(weightedItem);
+        BigDecimal total = pricerService.defaultPricer(weightedItem);
 
         assertEquals(new BigDecimal(0.4975, new MathContext(4)), total);
     }
@@ -101,7 +109,7 @@ public class PricerTest extends TestCase {
 
         weightedItem.add(orangeItem);
 
-        BigDecimal total = pricer.computeTotalPrice(weightedItem);
+        BigDecimal total = pricerService.defaultPricer(weightedItem);
 
         assertEquals(new BigDecimal(225.7, new MathContext(4)), total);
     }
@@ -115,7 +123,7 @@ public class PricerTest extends TestCase {
 
         weightedItem.add(orangeItem);
 
-        BigDecimal total = pricer.computeTotalPrice(weightedItem);
+        BigDecimal total = pricerService.defaultPricer(weightedItem);
 
         assertEquals(new BigDecimal(226.8, new MathContext(4)), total);
     }
@@ -125,12 +133,14 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
         Item       milkBottleItem                 = new Item("milk bottle",
-                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER,
-                new BuyXGetYFreePromotion(new BigDecimal(4), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER);
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
-        BigDecimal total = pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
+        pricerService.setBuyXGetYFreePromotion(
+                new BuyXGetYFreePromotion(new BigDecimal(4), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+
+        BigDecimal total = pricerService.buyXGetYFreePromotionPricer(itemsWithPromotionBuyXGetYFree);
 
         assertEquals(new BigDecimal(3), total);
     }
@@ -140,12 +150,14 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXPoundForY = new ArrayList<>();
 
         Item       lensItem                        = new Item("tomato", new Price(UnitType.OUNCE, new BigDecimal(0.1)),
-                new BigDecimal(3), UnitType.POUND,
-                new BuyXPoundForYPromotion(new BigDecimal(2), UnitType.POUND, new BigDecimal(1)));
+                new BigDecimal(3), UnitType.POUND);
 
         itemsWithPromotionBuyXPoundForY.add(lensItem);
 
-        BigDecimal total = pricer.computeTotalPrice(itemsWithPromotionBuyXPoundForY);
+        pricerService.setBuyXPoundForYPromotion(
+                new BuyXPoundForYPromotion(new BigDecimal(2), UnitType.POUND, new BigDecimal(1)));
+
+        BigDecimal total = pricerService.buyXPoundForYPromotionPricer(itemsWithPromotionBuyXPoundForY);
 
         assertEquals(new BigDecimal(2.60, new MathContext(4)), total);
     }
@@ -154,13 +166,14 @@ public class PricerTest extends TestCase {
     public void testPricerEnsureNotEqualToZero() {
         List<Item> itemsWithPromotionBuyXForY = new ArrayList<>();
         Item       beanCanItem                = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new BigDecimal(4), UnitType.NUMBER,
-                new BuyXForYPromotion(BigDecimal.ZERO, UnitType.NUMBER, new BigDecimal(1)));
+                new BigDecimal(4), UnitType.NUMBER);
 
         itemsWithPromotionBuyXForY.add(beanCanItem);
 
+        pricerService.setBuyXForYPromotion(new BuyXForYPromotion(BigDecimal.ZERO, UnitType.NUMBER, new BigDecimal(1)));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXForY);
+            pricerService.buyXForYPromotionPricer(itemsWithPromotionBuyXForY);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The parameter quantityPerPromotion can not be equal to 0.", e.getMessage());
@@ -171,12 +184,14 @@ public class PricerTest extends TestCase {
     public void testPricerEnsureNotNull() {
         List<Item> itemsWithPromotionBuyXForY = new ArrayList<>();
         Item       beanCanItem                = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new BigDecimal(4), UnitType.NUMBER, new BuyXForYPromotion(new BigDecimal(3), UnitType.NUMBER, null));
+                new BigDecimal(4), UnitType.NUMBER);
 
         itemsWithPromotionBuyXForY.add(beanCanItem);
 
+        pricerService.setBuyXForYPromotion(new BuyXForYPromotion(new BigDecimal(3), UnitType.NUMBER, null));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXForY);
+            pricerService.buyXForYPromotionPricer(itemsWithPromotionBuyXForY);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The parameter promotionPrice can not be null.", e.getMessage());
@@ -187,13 +202,14 @@ public class PricerTest extends TestCase {
     public void testPricerEnsureType() {
         List<Item> itemsWithPromotionBuyXForY = new ArrayList<>();
         Item       beanCanItem                = new Item("bean can", new Price(UnitType.NUMBER, new BigDecimal(1)),
-                new BigDecimal(4), UnitType.NUMBER,
-                new BuyXForYPromotion(new BigDecimal(3), UnitType.GRAM, new BigDecimal(1)));
+                new BigDecimal(4), UnitType.NUMBER);
 
         itemsWithPromotionBuyXForY.add(beanCanItem);
 
+        pricerService.setBuyXForYPromotion(new BuyXForYPromotion(new BigDecimal(3), UnitType.GRAM, new BigDecimal(1)));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXForY);
+            pricerService.buyXForYPromotionPricer(itemsWithPromotionBuyXForY);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The parameter Quantity per promotion type : " + UnitType.GRAM + " should be countable.",
@@ -206,13 +222,15 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
         Item       milkBottleItem                 = new Item("milk bottle",
-                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER,
-                new BuyXGetYFreePromotion(new BigDecimal(-1), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.NUMBER);
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
+        pricerService.setBuyXGetYFreePromotion(
+                new BuyXGetYFreePromotion(new BigDecimal(-1), UnitType.NUMBER, new BigDecimal(1), UnitType.NUMBER));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
+            pricerService.buyXGetYFreePromotionPricer(itemsWithPromotionBuyXGetYFree);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The sum of parameters : quantityToGetDiscount and quantityForFree can not be 0.",
@@ -225,13 +243,15 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
         Item       milkBottleItem                 = new Item("milk bottle",
-                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.GRAM,
-                new BuyXGetYFreePromotion(BigDecimal.ZERO, UnitType.NUMBER, BigDecimal.ZERO, UnitType.NUMBER));
+                new Price(UnitType.NUMBER, new BigDecimal(1)), new BigDecimal(3), UnitType.GRAM);
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
+        pricerService.setBuyXGetYFreePromotion(
+                new BuyXGetYFreePromotion(BigDecimal.ZERO, UnitType.NUMBER, BigDecimal.ZERO, UnitType.NUMBER));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
+            pricerService.buyXGetYFreePromotionPricer(itemsWithPromotionBuyXGetYFree);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The Item price type : " + UnitType.NUMBER + " and the Item quantity type : " + UnitType.GRAM
@@ -244,13 +264,15 @@ public class PricerTest extends TestCase {
         List<Item> itemsWithPromotionBuyXGetYFree = new ArrayList<>();
 
         Item       milkBottleItem                 = new Item("milk bottle",
-                new Price(UnitType.NUMBER, new BigDecimal(-1)), new BigDecimal(3), UnitType.NUMBER,
-                new BuyXGetYFreePromotion(BigDecimal.ZERO, UnitType.NUMBER, BigDecimal.ZERO, UnitType.NUMBER));
+                new Price(UnitType.NUMBER, new BigDecimal(-1)), new BigDecimal(3), UnitType.NUMBER);
 
         itemsWithPromotionBuyXGetYFree.add(milkBottleItem);
 
+        pricerService.setBuyXGetYFreePromotion(
+                new BuyXGetYFreePromotion(BigDecimal.ZERO, UnitType.NUMBER, BigDecimal.ZERO, UnitType.NUMBER));
+
         try {
-            pricer.computeTotalPrice(itemsWithPromotionBuyXGetYFree);
+            pricerService.buyXGetYFreePromotionPricer(itemsWithPromotionBuyXGetYFree);
         } catch (IllegalArgumentException e) {
             // Assert the error message
             assertEquals("The parameter " + -1 + " : Item price should be countable.", e.getMessage());

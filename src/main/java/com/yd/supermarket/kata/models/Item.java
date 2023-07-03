@@ -16,21 +16,16 @@ public class Item {
     private Price      price;
     private BigDecimal quantity;
     private UnitType   measureUnit;
-    private Promotion  promotion;
+
+    public Item() {
+        super();
+    }
 
     public Item(String itemName, Price price, BigDecimal quantity, UnitType measureUnit) {
         this.itemName    = itemName;
         this.price       = price;
         this.quantity    = quantity;
         this.measureUnit = measureUnit;
-    }
-
-    public Item(String itemName, Price price, BigDecimal quantity, UnitType measureUnit, Promotion promotion) {
-        this.itemName    = itemName;
-        this.price       = price;
-        this.quantity    = quantity;
-        this.measureUnit = measureUnit;
-        this.promotion   = promotion;
     }
 
     public String getItemName() {
@@ -47,9 +42,5 @@ public class Item {
 
     public UnitType getMeasureUnit() {
         return measureUnit;
-    }
-
-    public Promotion getPromotion() {
-        return promotion;
     }
 }
