@@ -21,6 +21,14 @@ public class ConversionUtils {
 
     }
 
+    /**
+     * This method convert the item quantity from the item measure unit to the target unit.
+     * 
+     * @param itemQuantity
+     * @param itemMeasureUnit
+     * @param targetType
+     * @return A {@link BigDecimal}
+     */
     public static BigDecimal conversion(BigDecimal itemQuantity, UnitType itemMeasureUnit, UnitType targetType) {
         BigDecimal resultQuantity = BigDecimal.ZERO;
 

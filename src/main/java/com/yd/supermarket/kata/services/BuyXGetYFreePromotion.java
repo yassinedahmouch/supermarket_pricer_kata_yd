@@ -12,18 +12,18 @@ import com.yd.supermarket.kata.models.Price;
 import com.yd.supermarket.kata.models.Promotion;
 
 /**
- * This class is an implementation of the interface {@link Promotion}.</br>
- * This promotion specify that if you buy X of a goods, you will have Y of the
- * same goods for free.
+ * This class is the buy X get Y free implementation of the interface {@link Promotion}.
  * 
  * @author Yassine
  *
  */
 public class BuyXGetYFreePromotion implements Promotion {
 
-    private BigDecimal quantityToGetDiscount;   // Number of items to buy to get the discount
+    // Number of items to buy to get the discount
+    private BigDecimal quantityToGetDiscount;
     private UnitType   measureUnitToGetDiscount;
-    private BigDecimal quantityForFree;         // Number of items to get for free
+    // Number of items to get for free
+    private BigDecimal quantityForFree;
     private UnitType   measureUnitForFree;
 
     public BuyXGetYFreePromotion(BigDecimal quantityToGetDiscount, UnitType measureUnitToGetDiscount,
@@ -34,23 +34,30 @@ public class BuyXGetYFreePromotion implements Promotion {
         this.measureUnitForFree       = measureUnitForFree;
     }
 
+    /**
+     * {@inheritDoc} </br>
+     * This method calculate the price using the promotion that specify that if you
+     * buy X of a goods, you will have Y of the same goods for free.
+     */
     @Override
     public BigDecimal computePriceWithPromotion(BigDecimal itemQuantity, UnitType itemMeasureUnit, Price itemPrice) {
         itemQuantity = conversion(itemQuantity, itemMeasureUnit, itemPrice.getPriceType());
-        //
+        
+        // We do some checks before starting the process.
         ensureType(measureUnitToGetDiscount, "Quantity to get discount type");
         ensureType(measureUnitForFree, "Quantity for free type");
-
         ensureNotEqualToZero(quantityToGetDiscount, "quantityToGetDiscount");
         ensureNotEqualToZero(quantityForFree, "quantityForFree");
         ensureSumNotEqualToZero(quantityToGetDiscount, quantityForFree, "quantityToGetDiscount", "quantityForFree");
 
         BigDecimal itemPriceValue = itemPrice.getPriceValue();
 
+        // If the item quantity is less than the quantity to get discount, so there isn't enough quantity to apply the promotion.
         if (itemQuantity.compareTo(quantityToGetDiscount) <= 0) {
             return itemPriceValue.multiply(itemQuantity);
         }
 
+        // Calculate the number of qualifying items.
         BigDecimal numQualifying = itemQuantity.divide((quantityToGetDiscount.add(quantityForFree)));
 
         return itemPriceValue.multiply(itemQuantity.subtract(numQualifying.multiply(quantityForFree)));

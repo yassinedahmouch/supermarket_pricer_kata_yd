@@ -40,24 +40,29 @@ public class Pricer {
 
         for (Item item : items) {
             BigDecimal itemTotalPrice;
-            //
+            
+            // Retrieve price informations.
             Price      itemPrice       = item.getPrice();
             BigDecimal itemPriceValue  = itemPrice.getPriceValue();
             UnitType   itemPriceType   = itemPrice.getPriceType();
-            //
+            
+            // Retrieve quantity informations.
             BigDecimal itemQuantity    = item.getQuantity();
             UnitType   itemMeasureUnit = item.getMeasureUnit();
             //
             Promotion  itemPromotion   = item.getPromotion();
 
+            // We do some checks before starting the process.
             ensureCompatibility(itemPriceType, itemMeasureUnit, "Item price type", "Item quantity type");
             ensureNotNull(itemPriceValue, "Item price");
             ensureNotNegative(itemPriceValue, "Item price");
             ensureNotNegative(itemQuantity, "Item quantity");
 
             if (null != itemPromotion) {
+                // We apply this block if there is a promotion.
                 itemTotalPrice = itemPromotion.computePriceWithPromotion(itemQuantity, itemMeasureUnit, itemPrice);
             } else {
+                // We apply this block if there is no promotion.
                 itemQuantity   = conversion(itemQuantity, itemMeasureUnit, itemPriceType);
                 itemTotalPrice = itemPriceValue.multiply(itemQuantity);
             }

@@ -23,6 +23,9 @@ public class PricerTest extends TestCase {
 
     Pricer pricer;
 
+    /**
+     * This method is used for initialization and it is called before a test is executed
+     */
     @Override
     protected void setUp() throws Exception {
         pricer = new Pricer();
