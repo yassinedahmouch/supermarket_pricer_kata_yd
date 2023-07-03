@@ -1,5 +1,7 @@
 package com.yd.supermarket.kata.models;
 
+import static com.yd.supermarket.kata.utils.AtomicIdCounter.nextId;
+
 import java.math.BigDecimal;
 
 import com.yd.supermarket.kata.enumerations.UnitType;
@@ -12,6 +14,7 @@ import com.yd.supermarket.kata.enumerations.UnitType;
  */
 public class Item {
 
+    private Long       id;
     private String     itemName;
     private Price      price;
     private BigDecimal quantity;
@@ -22,10 +25,15 @@ public class Item {
     }
 
     public Item(String itemName, Price price, BigDecimal quantity, UnitType measureUnit) {
+        id               = nextId();
         this.itemName    = itemName;
         this.price       = price;
         this.quantity    = quantity;
         this.measureUnit = measureUnit;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getItemName() {
